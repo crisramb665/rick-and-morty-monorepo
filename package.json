@@ -1,0 +1,7 @@
+{
+  "packageManager": "yarn@1.22.21",
+  "name": "rick-and-morty-monorepo",
+  "version": "1.0.0",
+  "description": "rick and morty monorepo",
+  "author": "Cristian Romero"
+}
