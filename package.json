@@ -6,6 +6,7 @@
   "author": "Cristian Romero",
   "private": true,
   "scripts": {
+    "dev": "turbo run dev",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "workspaces": [
@@ -13,6 +14,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "prettier": "^3.5.3"
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.2"
   }
 }
