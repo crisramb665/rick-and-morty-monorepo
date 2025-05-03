@@ -3,5 +3,18 @@
   "name": "rick-and-morty-monorepo",
   "version": "1.0.0",
   "description": "rick and morty monorepo",
-  "author": "Cristian Romero"
+  "author": "Cristian Romero",
+  "private": true,
+  "scripts": {
+    "dev": "turbo run dev",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "devDependencies": {
+    "prettier": "^3.5.3",
+    "turbo": "^2.5.2"
+  }
 }
