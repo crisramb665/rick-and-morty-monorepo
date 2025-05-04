@@ -1,4 +1,5 @@
 /** npm imports */
+import 'reflect-metadata'
 import express from 'express'
 import type { Express } from 'express'
 import { ApolloServer } from 'apollo-server-express'

@@ -1,8 +1,9 @@
 /** npm imports */
-import { Sequelize } from 'sequelize'
+import { Sequelize } from 'sequelize-typescript'
 
 /** local imports */
 import settings from '../config/settings'
+import { Character } from './models/character.model'
 
 // This is the db connection file for the backend app.
 export const dbInstance = (): Sequelize => {
@@ -10,7 +11,10 @@ export const dbInstance = (): Sequelize => {
   if (!DBHost || !DBPort || !DBUser || !DBPassword || !DBName) throw new Error('Missing database connection settings')
 
   try {
-    const sequelize = new Sequelize(DBName, DBUser, DBPassword, {
+    const sequelize = new Sequelize({
+      database: DBName,
+      username: DBUser,
+      password: DBPassword,
       host: DBHost,
       port: DBPort,
       dialect: 'postgres',
@@ -22,6 +26,7 @@ export const dbInstance = (): Sequelize => {
         max: 5,
         timeout: 5000,
       },
+      models: [Character],
     })
 
     console.log('Database connection established successfully')
