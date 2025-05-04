@@ -5,7 +5,8 @@
   "author": "Cristian Romero",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/index.ts"
+    "dev": "nodemon src/index.ts",
+    "seed": "ts-node src/scripts/seedCharacters.ts"
   },
   "dependencies": {
     "apollo-server-express": "^3.13.0",

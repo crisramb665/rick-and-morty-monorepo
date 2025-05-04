@@ -3,6 +3,7 @@ import 'reflect-metadata'
 import express from 'express'
 import type { Express } from 'express'
 import { ApolloServer } from 'apollo-server-express'
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import http from 'http'
 
 /** local imports */
@@ -25,7 +26,11 @@ const startup = async (): Promise<void> => {
     const sequelize = dbInstance()
     await sequelize.authenticate()
 
-    const apolloServer = new ApolloServer({ typeDefs, resolvers })
+    const apolloServer = new ApolloServer({
+      typeDefs,
+      resolvers,
+      plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    })
 
     await apolloServer.start()
 

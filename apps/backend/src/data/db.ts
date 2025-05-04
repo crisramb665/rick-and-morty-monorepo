@@ -3,7 +3,7 @@ import { Sequelize } from 'sequelize-typescript'
 
 /** local imports */
 import settings from '../config/settings'
-import { Character } from './models/character.model'
+import { Character as CharacterModel } from './models/character.model'
 
 // This is the db connection file for the backend app.
 export const dbInstance = (): Sequelize => {
@@ -26,7 +26,7 @@ export const dbInstance = (): Sequelize => {
         max: 5,
         timeout: 5000,
       },
-      models: [Character],
+      models: [CharacterModel],
     })
 
     console.log('Database connection established successfully')
