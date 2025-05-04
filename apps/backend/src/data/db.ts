@@ -4,6 +4,7 @@ import { Sequelize } from 'sequelize'
 /** local imports */
 import settings from '../config/settings'
 
+// This is the db connection file for the backend app.
 export const dbInstance = (): Sequelize => {
   const { DBHost, DBPort, DBUser, DBPassword, DBName } = settings.DBSettings
   if (!DBHost || !DBPort || !DBUser || !DBPassword || !DBName) throw new Error('Missing database connection settings')
