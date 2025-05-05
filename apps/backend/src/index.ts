@@ -10,6 +10,7 @@ import http from 'http'
 import settings from './config/settings'
 import { dbInstance } from './data/db'
 import { typeDefs, resolvers } from './graphql'
+import { loggerPlugin } from './pluggins/loggerPlugin'
 
 const app: Express = express()
 
@@ -29,7 +30,7 @@ const startup = async (): Promise<void> => {
     const apolloServer = new ApolloServer({
       typeDefs,
       resolvers,
-      plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+      plugins: [ApolloServerPluginDrainHttpServer({ httpServer }), loggerPlugin],
     })
 
     await apolloServer.start()
