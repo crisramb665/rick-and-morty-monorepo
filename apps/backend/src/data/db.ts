@@ -7,12 +7,14 @@ import { Character as CharacterModel } from './models/character.model'
 
 // This is the db connection file for the backend app.
 export const dbInstance = (): Sequelize => {
-  const { DBHost, DBPort, DBUser, DBPassword, DBName } = settings.DBSettings
-  if (!DBHost || !DBPort || !DBUser || !DBPassword || !DBName) throw new Error('Missing database connection settings')
+  const { env, DBSettings } = settings
+  const { DBHost, DBPort, DBUser, DBPassword, DBName, DBNameTest } = DBSettings
+  if (!DBHost || !DBPort || !DBUser || !DBPassword || !DBName || !DBNameTest)
+    throw new Error('Missing database connection settings')
 
   try {
     const sequelize = new Sequelize({
-      database: DBName,
+      database: env === 'test' ? DBNameTest : DBName,
       username: DBUser,
       password: DBPassword,
       host: DBHost,

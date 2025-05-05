@@ -9,9 +9,11 @@ type DBSettingsType = {
   DBUser: string
   DBPassword: string
   DBName: string
+  DBNameTest: string
 }
 
 type SettingsType = {
+  env: string
   Port: number
   RickAndMortyAPIUrl: string
   DBSettings: DBSettingsType
@@ -20,6 +22,7 @@ type SettingsType = {
 // This is the settings file for the backend application.
 // It loads environment variables from a .env file and exports them as a settings object.
 const settings: SettingsType = {
+  env: process.env.NODE_ENV || 'stage',
   Port: Number(process.env.PORT) || 4000,
   RickAndMortyAPIUrl: process.env.RAM_API_URL || 'https://rickandmortyapi.com/api/character',
   DBSettings: {
@@ -28,6 +31,7 @@ const settings: SettingsType = {
     DBUser: process.env.DB_USER || 'rick',
     DBPassword: process.env.DB_PASSWORD || '',
     DBName: process.env.DB_NAME || 'rick_and_morty',
+    DBNameTest: process.env.DB_NAME_TEST || 'rick_and_morty_test',
   },
 }
 
