@@ -1,6 +1,9 @@
 /** npm imports */
 import { Table, Column, Model, DataType } from 'sequelize-typescript'
 
+/**
+ * Declaring Table Schema for characters table. Using decorators for better readability
+ */
 @Table({ tableName: 'characters' })
 export class Character extends Model<Character> {
   @Column({ type: DataType.INTEGER, primaryKey: true, autoIncrement: true })
