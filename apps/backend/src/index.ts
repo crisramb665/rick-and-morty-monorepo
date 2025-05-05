@@ -1,10 +1,14 @@
 /** npm imports */
+import 'reflect-metadata'
 import express from 'express'
 import type { Express } from 'express'
 import { ApolloServer } from 'apollo-server-express'
+import { ApolloServerPluginDrainHttpServer } from 'apollo-server-core'
 import http from 'http'
 
 /** local imports */
+import settings from './config/settings'
+import { dbInstance } from './data/db'
 import { typeDefs, resolvers } from './graphql'
 
 const app: Express = express()
@@ -18,16 +22,28 @@ const httpServer = http.createServer(app)
  * @returns {Promise<void>} Resolves when server is successfully started
  */
 const startup = async (): Promise<void> => {
-  const apolloServer = new ApolloServer({ typeDefs, resolvers })
+  try {
+    const sequelize = dbInstance()
+    await sequelize.authenticate()
 
-  await apolloServer.start()
+    const apolloServer = new ApolloServer({
+      typeDefs,
+      resolvers,
+      plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
+    })
 
-  // Apply Apollo middleware to Express app
-  // This creates the GraphQL endpoint (default: /graphql)
-  apolloServer.applyMiddleware({ app })
+    await apolloServer.start()
 
-  await new Promise<void>((resolve) => httpServer.listen({ port: 4000 }, resolve))
-  console.log(`🚀 [server]: ready at http://localhost:4000`)
+    // Apply Apollo middleware to Express app
+    // This creates the GraphQL endpoint (default: /graphql)
+    apolloServer.applyMiddleware({ app })
+
+    await new Promise<void>((resolve) => httpServer.listen({ port: settings.Port }, resolve))
+    console.log(`🚀 [server]: ready at http://localhost:${settings.Port}`)
+  } catch (error: any) {
+    console.error('Error starting the server or connecting database:', error.message)
+    throw new Error('Server startup failed')
+  }
 }
 
 startup()
