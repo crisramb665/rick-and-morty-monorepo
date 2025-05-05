@@ -2,7 +2,7 @@
 import { useQuery } from '@apollo/client'
 
 /** local imports */
-import CharacterCard from '../components/CharacterCard.tsx'
+import CharacterCard from '../components/character-card'
 import { type CharactersResultQuery } from '../graphql/types.js'
 import GET_ALL_CHARACTERS_QUERY from '../graphql/queries/getAllCharactersQuery.graphql'
 
