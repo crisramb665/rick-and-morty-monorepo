@@ -11,6 +11,7 @@ import settings from './config/settings'
 import { dbInstance } from './data/db'
 import { typeDefs, resolvers } from './graphql'
 import { loggerPlugin } from './pluggins/loggerPlugin'
+import { scheduleCharactersUpdate } from './cron/scheduler'
 
 const app: Express = express()
 
@@ -48,3 +49,4 @@ const startup = async (): Promise<void> => {
 }
 
 startup()
+scheduleCharactersUpdate()
