@@ -1,4 +1,5 @@
 /** local imports */
+import redis from '../config/redis'
 import { Character } from '../data/models/character.model'
 import { MeasureExecutionTime } from '../pluggins/measureExecution'
 
@@ -15,12 +16,25 @@ export type FilteredCharacterProps = {
 export class CharacterService {
   @MeasureExecutionTime()
   async getAllCharacters() {
-    return await Character.findAll()
+    const cacheKey = `allCharacters`
+    const cachedData = await redis.get(cacheKey)
+
+    if (cachedData) return JSON.parse(cachedData)
+
+    const allCharacters = await Character.findAll()
+
+    await redis.set(cacheKey, JSON.stringify(allCharacters), 'EX', 300) // Expires within 5 minutes
+    return allCharacters
   }
 
   @MeasureExecutionTime()
   async filteredCharacters(filters: FilteredCharacterProps) {
     const safeFilters = filters || {}
+
+    const cacheKey = `characters:${JSON.stringify(safeFilters)}`
+    const cachedData = await redis.get(cacheKey)
+
+    if (cachedData) return JSON.parse(cachedData)
 
     const where = Object.entries(safeFilters)
       .filter(([_, value]) => value)
@@ -32,6 +46,10 @@ export class CharacterService {
         {} as Record<string, any>,
       )
 
-    return Object.keys(where).length > 0 ? await Character.findAll({ where }) : await this.getAllCharacters()
+    const characters =
+      Object.keys(where).length > 0 ? await Character.findAll({ where }) : await this.getAllCharacters()
+
+    await redis.set(cacheKey, JSON.stringify(characters), 'EX', 300) // Expires within 5 minutes
+    return characters
   }
 }
