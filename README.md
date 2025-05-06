@@ -6,8 +6,8 @@ This monorepo contains a fullstack application that displays characters from the
 
 ```
 apps/
-  backend/        # Node.js + Express + Redis + GraphQL backend
-  frontend/       # React + TailwindCSS frontend
+  backend/        # Typescript + Node.js + Express + PostgreSQL + Sequelize + Redis + GraphQL backend
+  frontend/       # Typescript + React + TailwindCSS frontend
 ```
 
 ## 🚀 Getting Started
