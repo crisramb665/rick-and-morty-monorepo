@@ -21,6 +21,7 @@ const CommentsSection = ({ characterId }: CommentsSectionProps) => {
 
   return (
     <div>
+      {comments.length > 0 && <h3 className="mt-4 mb-2 text-md font-semibold text-gray-700">Comments</h3>}
       <ul className="mt-2 space-y-1">
         {comments.map((comment, i) => (
           <li key={i} className="flex justify-between items-center bg-gray-50 p-2 rounded">
