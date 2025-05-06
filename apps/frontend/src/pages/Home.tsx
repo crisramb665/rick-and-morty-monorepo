@@ -17,7 +17,7 @@ const Home = () => {
 
       <div className="md:col-span-2 p-6 overflow-y-auto">
         {selectedCharacterId ? (
-          <CharacterCard />
+          <CharacterCard characterId={selectedCharacterId} />
         ) : (
           <p className="text-gray-500">Select a character to see the details</p>
         )}

@@ -16,3 +16,7 @@ export type Character = {
 export type CharactersResultQuery = {
   readonly characters: Character[]
 }
+
+export type SingleCharacterResultQuery = {
+  readonly findCharacterById: Character
+}
