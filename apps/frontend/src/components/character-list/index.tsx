@@ -16,8 +16,7 @@ const CharacterList = ({ onSelectCharacter }: CharacterListProps) => {
   const [search, setSearch] = useState<string>('')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
-  const { data, loading, error } = useQuery<CharactersResultQuery>(GET_ALL_CHARACTERS_QUERY) //! TODO: MUST CHANGE THE QUERY
-  // console.log({ data, loading, error })
+  const { data, loading, error } = useQuery<CharactersResultQuery>(GET_ALL_CHARACTERS_QUERY)
 
   const { isFavorite } = useFavorites()
 
