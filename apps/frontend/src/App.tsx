@@ -4,7 +4,6 @@ import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'
 import { ApolloProvider } from '@apollo/client'
 
 /** local imports */
-import './App.css'
 import client from './graphql/client'
 import Home from './pages/Home'
 

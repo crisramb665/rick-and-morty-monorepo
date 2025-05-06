@@ -1,7 +1,16 @@
 /** npm imports */
 import React from 'react'
 
-const CharacterCard = ({ name, image, species }: any) => {
+interface CharacterCardProps {
+  name: string
+  status: string
+  species: string
+  gender: string
+  origin: string
+  image: string
+}
+
+const CharacterCard = () => {
   return (
     <div>
       <div>
