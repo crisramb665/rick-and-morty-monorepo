@@ -13,5 +13,9 @@ export const resolvers = {
       const filtered = await charactersService.filteredCharacters(args.filters)
       return filtered
     },
+    findCharacterById: async (_: unknown, args: { id: number }) => {
+      const foundCharacter = await charactersService.findCharacterById(args.id)
+      return foundCharacter
+    },
   },
 }

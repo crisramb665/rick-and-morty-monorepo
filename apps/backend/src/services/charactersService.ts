@@ -52,4 +52,17 @@ export class CharacterService {
     await redis.set(cacheKey, JSON.stringify(characters), 'EX', 300) // Expires within 5 minutes
     return characters
   }
+
+  @MeasureExecutionTime()
+  async findCharacterById(id: number) {
+    const cacheKey = `character:${id}`
+    const cachedData = await redis.get(cacheKey)
+
+    if (cachedData) return JSON.parse(cachedData)
+
+    const foundCharacter = await Character.findByPk(id)
+    if (foundCharacter) await redis.set(cacheKey, JSON.stringify(foundCharacter), 'EX', 300) // Expires within 5 minutes
+
+    return foundCharacter
+  }
 }

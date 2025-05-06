@@ -28,5 +28,6 @@ export const typeDefs = gql`
   type Query {
     characters: [Character]
     filterCharacters(filters: FilteredCharacterType): [Character]
+    findCharacterById(id: Int!): Character
   }
 `
