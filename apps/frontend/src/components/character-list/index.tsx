@@ -20,7 +20,7 @@ const CharacterList = ({ onSelectCharacter }: CharacterListProps) => {
 
   return (
     <div className="flex flex-col gap-4">
-      <h1>Rick and Morty list</h1>
+      <h1 className="text-xl">Rick and Morty list</h1>
       <input
         className="p-2 border border-gray-300 rounded-md"
         type="text"

@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client'
 import { type SingleCharacterResultQuery } from '../../graphql/types'
 import FIND_CHARACTER_BY_ID from '../../graphql/queries/findCharacterById.graphql'
 import { useFavorites } from '../../context/FavoritesContext'
+import CommentsSection from './CommentsSection'
 
 interface CharacterCardProps {
   characterId: number
@@ -42,10 +43,7 @@ const CharacterCard = ({ characterId }: CharacterCardProps) => {
         </div>
       </div>
 
-      <div>
-        <h3 className="text-lg font-semibold mt-6 mb-2">Comments</h3>
-        <p className="text-gray-500">Comments section</p>
-      </div>
+      <CommentsSection characterId={character.id} />
     </div>
   )
 }
