@@ -4,6 +4,8 @@ import { useQuery } from '@apollo/client'
 /** local imports */
 import { type SingleCharacterResultQuery } from '../../graphql/types'
 import FIND_CHARACTER_BY_ID from '../../graphql/queries/findCharacterById.graphql'
+import { useFavorites } from '../../context/FavoritesContext'
+import CommentsSection from './CommentsSection'
 
 interface CharacterCardProps {
   characterId: number
@@ -13,13 +15,15 @@ const CharacterCard = ({ characterId }: CharacterCardProps) => {
   const { data, loading, error } = useQuery<SingleCharacterResultQuery>(FIND_CHARACTER_BY_ID, {
     variables: { id: characterId },
   })
-
-  if (loading) return <p className="text-gray-500">Loading character...</p>
-  if (error) return <p className="text-red-500">Error: {error.message}</p>
+  const { isFavorite, toggleFavorite } = useFavorites()
 
   const character = data?.findCharacterById
 
+  if (loading) return <p className="text-gray-500">Loading character...</p>
+  if (error) return <p className="text-red-500">Error: {error.message}</p>
   if (!character) return <p>Character not found.</p>
+
+  const favorite = character && isFavorite(character.id.toString())
 
   return (
     <div className="p-4 space-y-4">
@@ -30,16 +34,16 @@ const CharacterCard = ({ characterId }: CharacterCardProps) => {
           <p className="text-gray-600">Specie: {character.species}</p>
           <p className="text-gray-600">Status: {character.status}</p>
           <p className="text-gray-600">Gender: {character.gender}</p>
-          <button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-            Mark as favorite
+          <button
+            className={`mt-4 px-4 py-2 rounded-lg text-white transition ${favorite ? 'bg-gray-600 hover:bg-gray-700' : 'bg-green-600 hover:bg-green-700'}`}
+            onClick={() => character && toggleFavorite(character.id.toString())}
+          >
+            {favorite ? 'Remove from favorites' : 'Mark as Favorite'}
           </button>
         </div>
       </div>
 
-      <div>
-        <h3 className="text-lg font-semibold mt-6 mb-2">Comments</h3>
-        <p className="text-gray-500">Comments section</p>
-      </div>
+      <CommentsSection characterId={character.id} />
     </div>
   )
 }
